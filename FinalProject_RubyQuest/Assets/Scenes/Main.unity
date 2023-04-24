@@ -33043,7 +33043,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3315758204503859880, guid: 97c8a56c7e066e545b350b48a2c341c4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 97c8a56c7e066e545b350b48a2c341c4, type: 3}
 --- !u!1001 &3528166954324713219
 PrefabInstance:
@@ -33427,6 +33428,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459176751528407123, guid: 86a6fa3f51efa3143a3543260bbd2729,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459176751528407123, guid: 86a6fa3f51efa3143a3543260bbd2729,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459176751528407123, guid: 86a6fa3f51efa3143a3543260bbd2729,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459176751528407123, guid: 86a6fa3f51efa3143a3543260bbd2729,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3459390084250530429, guid: 86a6fa3f51efa3143a3543260bbd2729,
         type: 3}

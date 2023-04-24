@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour
     public bool vertical;
     public float changeTime = 3.0f;
 
+    public bool noMove;
+
     Animator animator;
 
     private scr_playerController rubyController;
@@ -56,6 +58,10 @@ public class EnemyController : MonoBehaviour
 
             return;
             
+        }
+        if(noMove)
+        {
+            speed = 0;
         }
 
     }

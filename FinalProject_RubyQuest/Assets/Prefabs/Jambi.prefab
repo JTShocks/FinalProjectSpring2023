@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3928756417118997415}
   - component: {fileID: 3786908528758429215}
   - component: {fileID: 6776437303552797853}
+  - component: {fileID: 4930752657082796035}
   m_Layer: 11
   m_Name: Jambi
   m_TagString: NPC
@@ -149,6 +150,24 @@ MonoBehaviour:
   displayTime: 4
   dialogBox: {fileID: 6791390077301582613}
   dialogText: {fileID: 2459176751528407123}
+  timerDisplay: 0
+  stage: 0
+--- !u!58 &4930752657082796035
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459390084250530429}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.5, y: 0.5}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &4155046410515786987
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +263,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -10,7 +10,7 @@ public class NonPlayableCharacter : MonoBehaviour
     public float displayTime = 4.0f;
     public GameObject dialogBox;
     public TextMeshProUGUI dialogText;
-    float timerDisplay;
+    public float timerDisplay;
     public int stage;
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class NonPlayableCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (timerDisplay >= 0)
         {
@@ -36,7 +36,7 @@ public class NonPlayableCharacter : MonoBehaviour
 
     public void DisplayDialog()
     {
-        
+
         timerDisplay = displayTime;
         dialogBox.SetActive(true);
         if(stage == 0)

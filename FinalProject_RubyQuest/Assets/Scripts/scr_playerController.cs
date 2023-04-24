@@ -43,6 +43,7 @@ public class scr_playerController : MonoBehaviour
 
     bool isInvincible;
     float invincibleTimer;
+    bool inDialogue;
 
     public bool gameOver = false;
 
@@ -50,6 +51,9 @@ public class scr_playerController : MonoBehaviour
     public TextMeshProUGUI displayAmmo;
     public TextMeshProUGUI displayQuest;
     public TextMeshProUGUI displayRobots;
+
+    public GameObject interactKey;
+    public GameObject questBox;
 
 
     public int ammoCount {get {return currentAmmo;}}
@@ -70,6 +74,7 @@ public class scr_playerController : MonoBehaviour
         currentAmmo = 4;
         SetText(false);
         audioSource = GetComponent<AudioSource>();
+        interactKey.SetActive(false);
 
     }
 
@@ -96,6 +101,15 @@ public class scr_playerController : MonoBehaviour
             isInvincible = true;
             rb.simulated = false;
         }
+        if(inDialogue)
+        {
+            interactKey.SetActive(false);
+            questBox.SetActive(false);
+        } else if (!inDialogue)
+        {
+            questBox.SetActive(true);
+        }
+
         if(isInvincible)
         {
             invincibleTimer -= Time.deltaTime;
@@ -112,10 +126,12 @@ public class scr_playerController : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(rb.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
             if (hit.collider != null)
             {
-                 NonPlayableCharacter character = hit.collider.GetComponent<NonPlayableCharacter>();
+                NonPlayableCharacter character = hit.collider.GetComponent<NonPlayableCharacter>();
                 if (character != null)
                 {
+
                     character.DisplayDialog();
+                    inDialogue = true;   
                     didTalk = true;
                     SetText(false);
                     if (totalRobots == robotCount)
@@ -151,6 +167,21 @@ public class scr_playerController : MonoBehaviour
         position.y = position.y + moveSpeed * vert * Time.deltaTime;
 
         rb.MovePosition(position);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+    
+    NonPlayableCharacter character = other.gameObject.GetComponent<NonPlayableCharacter>();
+        if (character != null && !inDialogue)
+        {
+            interactKey.SetActive(true);
+        }
+
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        interactKey.SetActive(false);
     }
     public void ChangeHealth (int amount)
     {
