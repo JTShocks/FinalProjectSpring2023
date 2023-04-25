@@ -9,6 +9,14 @@ public class EnemyController : MonoBehaviour
     public float changeTime = 3.0f;
 
     public bool noMove;
+    public bool isSentry;
+    bool inAttackRange;
+    float attackChargeTime = 3f;
+    bool isCharging;
+
+    public GameObject crosshair;
+
+
 
     Animator animator;
 
@@ -40,6 +48,11 @@ public class EnemyController : MonoBehaviour
         timer = changeTime;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        crosshair.SetActive(false);
+        if(isSentry)
+        {
+            noMove = true;
+        }
     }
 
     void Update()
@@ -63,11 +76,24 @@ public class EnemyController : MonoBehaviour
         {
             speed = 0;
         }
-
+        if(isSentry && inAttackRange)
+        {
+            crosshair.SetActive(true);
+            crosshair.transform.position = rubyController.transform.position;
+            StartCoroutine(ChargeAttack(inAttackRange));
+        } else
+        {
+            crosshair.SetActive(false);
+        }
+       
     }
 
     void FixedUpdate()
     {
+        if(isCharging)
+        {
+            return;
+        }
         if (!broken)
         {
             return;
@@ -80,6 +106,11 @@ public class EnemyController : MonoBehaviour
             animator.SetFloat("Move X", 0);
             animator.SetFloat("Move Y", direction);
         }
+        else if (isSentry)
+        {
+            animator.SetFloat ("Move X",0);
+            animator.SetFloat ("Move Y", 0);
+        }
         else
         {
             position.x = position.x + Time.deltaTime * speed * direction; ;
@@ -88,6 +119,8 @@ public class EnemyController : MonoBehaviour
         }
 
         rb.MovePosition(position);
+
+
     }
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -97,6 +130,42 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-damage);
         }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(!isSentry)
+        {
+            return;
+        }
+
+        scr_playerController player = other.gameObject.GetComponent<scr_playerController>();
+
+        if (player != null)
+        {
+            inAttackRange = true;
+            isCharging = true;
+            Debug.Log("Locked on");
+
+             
+        }
+
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(!isSentry)
+        {
+            return;
+        }
+
+        scr_playerController player = other.gameObject.GetComponent<scr_playerController>();
+
+        if (player != null)
+        {
+            Debug.Log("Out of range");
+            inAttackRange = false;
+            isCharging = false;
+        }
+
     }
     public void Fix()
     {
@@ -112,4 +181,24 @@ public class EnemyController : MonoBehaviour
     {
         audioSource.PlayOneShot(clip);
     }
+
+    private IEnumerator ChargeAttack(bool canShoot)
+    {   
+        if(canShoot && broken)
+        {
+            isCharging = true;
+            yield return new WaitForSeconds(attackChargeTime);
+            if(isCharging && broken)
+            {
+                Debug.Log("Firing");
+                isCharging = false;
+                rubyController.ChangeHealth(-damage);
+            }
+            yield break;
+
+            
+        }
+
+    }
+
 }

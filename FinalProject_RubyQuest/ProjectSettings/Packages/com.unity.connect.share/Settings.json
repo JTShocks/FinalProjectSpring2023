@@ -21,7 +21,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"D:/Users/spark/Documents/GitHub/dig3480-s23-t3-rubys_new_adventure-JTShocks/WebGL Builds/Challenge3;D:/Users/spark/Documents/GitHub/dig3480-s23-t3-rubys_new_adventure-JTShocks/WebGL Builds;;;;;;;;\"}"
+                "value": "{\"m_Value\":\"D:/Users/spark/Documents/GitHub/FinalProjectSpring2023/FinalProject_RubyQuest/Builds;D:/Users/spark/Documents/GitHub/dig3480-s23-t3-rubys_new_adventure-JTShocks/WebGL Builds/Challenge3;D:/Users/spark/Documents/GitHub/dig3480-s23-t3-rubys_new_adventure-JTShocks/WebGL Builds;;;;;;;\"}"
             }
         ]
     }

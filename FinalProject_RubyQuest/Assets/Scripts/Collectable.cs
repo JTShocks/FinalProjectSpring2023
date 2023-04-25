@@ -9,6 +9,7 @@ public class Collectable : MonoBehaviour
     public int healAmount = 1;
     public int ammoAmount = 1;
     public AudioClip collectedClip;
+    public AudioClip ammoGet;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,7 +28,7 @@ public class Collectable : MonoBehaviour
             {
                 controller.ChangeAmmo(ammoAmount);
                 Destroy(gameObject);
-                controller.PlaySound(collectedClip);
+                controller.PlaySound(ammoGet);
             }
        }
     }

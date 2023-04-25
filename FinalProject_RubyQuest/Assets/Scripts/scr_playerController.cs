@@ -63,6 +63,12 @@ public class scr_playerController : MonoBehaviour
     float hor;
     float vert;
 
+    public float dashForce = 30f;
+    float dashCooldown = 3.0f;
+    float dashDuration = .25f;
+    bool canDash;
+    bool isDashing;
+
 
 
     // Start is called before the first frame update
@@ -75,12 +81,17 @@ public class scr_playerController : MonoBehaviour
         SetText(false);
         audioSource = GetComponent<AudioSource>();
         interactKey.SetActive(false);
+        canDash = true;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
         hor = Input.GetAxis ("Horizontal");
         vert = Input.GetAxis("Vertical");
 
@@ -100,14 +111,6 @@ public class scr_playerController : MonoBehaviour
         {
             isInvincible = true;
             rb.simulated = false;
-        }
-        if(inDialogue)
-        {
-            interactKey.SetActive(false);
-            questBox.SetActive(false);
-        } else if (!inDialogue)
-        {
-            questBox.SetActive(true);
         }
 
         if(isInvincible)
@@ -129,11 +132,11 @@ public class scr_playerController : MonoBehaviour
                 NonPlayableCharacter character = hit.collider.GetComponent<NonPlayableCharacter>();
                 if (character != null)
                 {
-
+                    inDialogue = true;
                     character.DisplayDialog();
-                    inDialogue = true;   
                     didTalk = true;
                     SetText(false);
+                    interactKey.SetActive(false);
                     if (totalRobots == robotCount)
                     {
                         ChangeStage(2);
@@ -157,16 +160,41 @@ public class scr_playerController : MonoBehaviour
                 }
             }
         }
+        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            Debug.Log("Dash pressed");
+            StartCoroutine(Dash());
+            animator.SetTrigger("Launch");
+        }
+
 
     }
 
     void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
         Vector2 position = rb.position;
         position.x = position.x + moveSpeed * hor * Time.deltaTime;
         position.y = position.y + moveSpeed * vert * Time.deltaTime;
 
         rb.MovePosition(position);
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        isInvincible = true;
+        rb.velocity = lookDirection * dashForce;
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
+        isInvincible = false;
+        yield return new WaitForSeconds (dashCooldown);
+        canDash = true;
+        Debug.Log("Dash availible");
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -176,12 +204,20 @@ public class scr_playerController : MonoBehaviour
         if (character != null && !inDialogue)
         {
             interactKey.SetActive(true);
+            questBox.SetActive(false);
         }
 
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        interactKey.SetActive(false);
+        NonPlayableCharacter character = other.gameObject.GetComponent<NonPlayableCharacter>();
+        if (character != null)
+        {
+            interactKey.SetActive(false);
+            questBox.SetActive(true);
+            inDialogue = false;
+        }
+
     }
     public void ChangeHealth (int amount)
     {

@@ -307,6 +307,7 @@ MonoBehaviour:
   interactKey: {fileID: 3860894547623717128}
   questBox: {fileID: 0}
   score: 0
+  dashForce: 10
 --- !u!61 &8761541139143580610
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -129,3 +129,4 @@ MonoBehaviour:
   healAmount: 1
   ammoAmount: 4
   collectedClip: {fileID: 8300000, guid: 91ab15c705fbb2a43b28d586dc11b33b, type: 3}
+  ammoGet: {fileID: 8300000, guid: f09519db93376ca4f93d356e00a4853b, type: 3}
